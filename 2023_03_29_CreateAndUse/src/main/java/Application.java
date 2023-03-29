@@ -14,15 +14,33 @@ import org.springframework.core.io.ClassPathResource;
  */
 public class Application {
     public static void main(String[] args) {
-//        // 1.获取 spring 上下文对象
-//        ApplicationContext context = new ClassPathXmlApplicationContext("spring_config.xml");
-//
-//        // 2.根据上下文对象提供的方法获取到 bean
-//        // 以往的写法是通过 new 的, 但是经过IOC之后就不用了~
-//        User user = (User) context.getBean("user");
-//
-//        // 3.使用 bean
-//        user.sayHi("zhangsan");
+        // 1.获取 spring 上下文对象
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring_config.xml");
+
+
+
+        // 2.根据上下文对象提供的方法获取到 bean
+        // 以往的写法是通过 new 的, 但是经过IOC之后就不用了~
+//        User user = (User) context.getBean("user");// 写法1
+
+        /**
+         * 下面一句代码写法简单, 但是容易出现错误!
+         * 当同一个类型注入到spring多次的时候, 就会报错!
+         */
+//        User user = context.getBean(User.class);// 写法2
+
+        /**
+         * 第三种写法相比第一种健壮!
+         * 第一种如果参数是null的话, 强转的时候会报错!
+         *     但是第三种不会!
+         * 所以非常推荐第三种!
+         */
+        User user = context.getBean("user", User.class);// 写法3
+
+
+
+        // 3.使用 bean
+        user.sayHi("zhangsan");
 
         /**
          * 下面是第二种(从spring中获取bean的)写法: 使用 bean 工厂!
@@ -31,10 +49,10 @@ public class Application {
          */
 
 //        // 1.获取 bean 工厂
-        BeanFactory factory = new XmlBeanFactory(new ClassPathResource("spring_config.xml"));
+//        BeanFactory factory = new XmlBeanFactory(new ClassPathResource("spring_config.xml"));
 //
 //        // 2.获取 bean
-        User user = (User) factory.getBean("user");
+//        User user = (User) factory.getBean("user");
 //
 //        // 3.使用bean
 //        user.sayHi("lisi");
