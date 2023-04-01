@@ -1,6 +1,8 @@
 import com.beans.User;
 import com.beans.UserController;
 import com.beans.inject.*;
+import com.beans.scope.BeanScope1;
+import com.beans.scope.BeanScope2;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -16,10 +18,22 @@ public class Application {
 
         // 1.先得到上下文对象
         ApplicationContext context = new ClassPathXmlApplicationContext("spring_config.xml");
-        // 2.得到 bean
-        UserController controller = context.getBean("userController", UserController.class);// 用小驼峰就可以找到对应的对象
-        // 3.使用 bean
-        controller.sayHi();
+//        // 2.得到 bean
+//        UserController controller = context.getBean("userController", UserController.class);// 用小驼峰就可以找到对应的对象
+//        // 3.使用 bean
+//        controller.sayHi();
+
+
+        /**
+         * 探究Bean的作用域
+         */
+        BeanScope1 beanScope1 = context.getBean(BeanScope1.class);
+        User user1 = beanScope1.getUser();
+        System.out.println("BeanScope1：" + user1);
+
+        BeanScope2 beanScope2 = context.getBean(BeanScope2.class);
+        User user2 = beanScope2.getUser();
+        System.out.println("BeanScope2：" + user2);
 
 
         /**

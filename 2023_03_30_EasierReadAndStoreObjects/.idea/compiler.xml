@@ -6,8 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="2023_03_30_EasierReadAndStoreObjects" />
+        <module name="Lifecycle" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Lifecycle" target="8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
