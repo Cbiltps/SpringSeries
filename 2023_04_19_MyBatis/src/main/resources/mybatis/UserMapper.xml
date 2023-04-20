@@ -4,6 +4,26 @@
 <mapper namespace="com.example.mybatis.mapper.UserMapper">
     <!-- 根据 id 查询用户 -->
     <select id="getUserById" resultType="com.example.mybatis.model.UserInfo">
-        select * from userinfo where id = ${id}
+        select * from userinfo where id=#{id}
     </select>
+
+    <!-- 根据用户 id 修改用户名称 -->
+    <update id="update">
+        update userinfo set username=#{username} where id=#{id}
+    </update>
+
+    <!-- 根据用户 id 删除用户 -->
+    <delete id="delete">
+        delete from userinfo where id=#{id}
+    </delete>
+
+    <!-- 添加用户, 返回受影响的行数 -->
+    <insert id="add">
+        insert into userinfo(username,password,photo) values(#{username},#{password},#{photo})
+    </insert>
+
+    <!-- 添加用户, 返回受影响的行数和自增id -->
+    <insert id="addGetId" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into userinfo(username,password,photo) values(#{username},#{password},#{photo})
+    </insert>
 </mapper>
