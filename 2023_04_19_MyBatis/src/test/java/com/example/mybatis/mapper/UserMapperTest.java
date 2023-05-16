@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -46,15 +47,16 @@ class UserMapperTest {
     @Test
     @Transactional
     void delete() {
-        int result = userMapper.delete(2);
+        int result = userMapper.delete(6);
         System.out.println("受影响的行数: " + result);
         Assertions.assertEquals(1, result);
     }
 
     @Test
+    @Transactional
     void add() {
         UserInfo userInfo = new UserInfo();
-        userInfo.setUsername("王五");
+        userInfo.setName("王五");
         userInfo.setPassword("123");
         userInfo.setPhoto("default.png");
         int result = userMapper.add(userInfo);
@@ -63,9 +65,10 @@ class UserMapperTest {
     }
 
     @Test
+    @Transactional
     void addGetId() {
         UserInfo userInfo = new UserInfo();
-        userInfo.setUsername("李四");
+        userInfo.setName("李四");
         userInfo.setPassword("123");
         userInfo.setPhoto("default.png");
         System.out.println("添加之前 user id: " + userInfo.getId());
@@ -73,5 +76,33 @@ class UserMapperTest {
         System.out.println("受影响的行数: " + result);
         System.out.println("添加之后 user id: " + userInfo.getId());
         Assertions.assertEquals(1, result);
+    }
+
+    @Test
+    void getUserByFullName() {
+        UserInfo userInfo = userMapper.getUserByFullName("张三");
+        log.info("用户信息: " + userInfo);
+    }
+
+    @Test
+    void getOrderList() {
+        List<UserInfo> list = userMapper.getOrderList("desc");
+        log.info("列表: " + list);
+    }
+
+    @Test
+    void login() {
+        String username = "admin";
+        String password = "' or 1='1"; // SQL注入
+//        String password = "admin";
+        UserInfo userInfo = userMapper.login(username, password);
+        log.info("用户信息: " + userInfo);
+    }
+
+    @Test
+    void getListByName() {
+        String username = "a";
+        List<UserInfo> list = userMapper.getListByName(username);
+        log.info("用户列表: " + list);
     }
 }

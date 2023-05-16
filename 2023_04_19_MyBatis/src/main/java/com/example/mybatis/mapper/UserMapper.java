@@ -4,6 +4,8 @@ import com.example.mybatis.model.UserInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * Description:
@@ -11,13 +13,28 @@ import org.apache.ibatis.annotations.Param;
  * Date: 2023-04-19
  * Time: 16:06
  */
-@Mapper // mybaits的interface
+@Mapper
 public interface UserMapper {
 
-    // 根据用户 id 查询用户
-    // 这里注意:
-    // 大部分时候可以不添加 @Param 注解, 在 xml 里用参数命名可以映射,
-    // 部分版本问题 xml 里只识别 @Param 中重新命名的参数名
+    // 根据名称进行模糊查询
+    public List<UserInfo> getListByName(@Param("username") String username);
+
+    // 登录功能
+    public UserInfo login(@Param("username") String username, @Param("password") String password);
+
+    // 根据全名查询用户对象(非模糊查询)
+    public UserInfo getUserByFullName(@Param("username") String username);
+
+    // 获取列表，根据创建时间进行倒序或正序
+    public List<UserInfo> getOrderList(@Param("order") String order);
+
+    /**
+     *  根据用户 id 查询用户:
+     *  大部分时候可以不添加 @Param 注解, 在 xml 里用参数命名可以映射,
+     *  部分版本问题 xml 里只识别 @Param 中重新命名的参数名.
+     * @param id
+     * @return
+     */
     public UserInfo getUserById(@Param("id") Integer id);
 
     // 根据用户 id 修改用户名称
