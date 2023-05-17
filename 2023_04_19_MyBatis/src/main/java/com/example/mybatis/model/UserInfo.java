@@ -2,6 +2,8 @@ package com.example.mybatis.model;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * Description:
@@ -18,5 +20,5 @@ public class UserInfo {
     private String createtime;
     private String updatetime;
     private int state;
-//    private List<ArticleInfo> artlist;
+    private List<ArticleInfo> articlelist;
 }

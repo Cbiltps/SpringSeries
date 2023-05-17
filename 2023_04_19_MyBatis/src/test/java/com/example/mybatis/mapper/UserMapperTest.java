@@ -105,4 +105,10 @@ class UserMapperTest {
         List<UserInfo> list = userMapper.getListByName(username);
         log.info("用户列表: " + list);
     }
+
+    @Test
+    void getUserAndArticleByUid() {
+        UserInfo userInfo = userMapper.getUserAndArticleByUid(1);
+        log.info("用户详情: " + userInfo);
+    }
 }

@@ -7,8 +7,25 @@
     <resultMap id="BaseMap" type="com.example.mybatis.model.UserInfo">
         <!-- 主键映射 -->
         <id column="id" property="id"></id>
+        <!-- 普通属性映射 -->
         <result column="username" property="name"></result>
+        <result column="password" property="password"></result>
+        <result column="photo" property="photo"></result>
+        <result column="createtime" property="createtime"></result>
+        <result column="updatetime" property="updatetime"></result>
+        <result column="state" property="state"></result>
+
+        <collection property="articlelist"
+                    resultMap="com.example.mybatis.mapper.ArticleMapper.BaseMap"
+                    columnPrefix="a_">
+        </collection>
     </resultMap>
+
+    <!-- 查询用户及用户发表的所有文章 -->
+    <select id="getUserAndArticleByUid" resultMap="BaseMap">
+        select u.*,a.id a_id,a.title a_title,a.content a_content,a.createtime a_createtime,a.updatetime a_updatetime
+        from userinfo u left join articleinfo a on u.id=a.uid where u.id=#{uid}
+    </select>
 
     <!-- 实现模糊查询 -->
     <select id="getListByName" resultType="com.example.mybatis.model.UserInfo">

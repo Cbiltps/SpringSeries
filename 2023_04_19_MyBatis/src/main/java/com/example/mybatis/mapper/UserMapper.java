@@ -15,6 +15,8 @@ import java.util.List;
  */
 @Mapper
 public interface UserMapper {
+    // 查询用户及用户发表的所有文章
+    public UserInfo getUserAndArticleByUid(@Param("uid") Integer uid);
 
     // 根据名称进行模糊查询
     public List<UserInfo> getListByName(@Param("username") String username);
@@ -48,54 +50,5 @@ public interface UserMapper {
 
     // 添加用户, 返回受影响的行数和自增的 id
     public int addGetId(UserInfo userInfo);
-
-
-
-
-
-
-
-
-
-
-//    int delIds(List<Integer> ids);
-//
-//    int update2(UserInfo userInfo);
-//
-//    // 根据名称进行模糊查询
-//    public List<UserInfo> getListByName(@Param("username") String username);
-//
-//    // 登录功能
-//    public UserInfo login(@Param("username") String username,
-//                          @Param("password") String password);
-
-
-
-//    // 查询用户及用户发表的所有文章，根据用户id
-//    public UserInfo getUserAndArticleByUid(@Param("uid") Integer uid);
-//
-//    // 根据全名查询用户对象（非模糊查询）
-//    public UserInfo getUserByFullName(@Param("username") String username);
-//
-//    // 获取列表，根据创建时间进行倒序或正序
-//    public List<UserInfo> getOrderList(@Param("order") String order);
-//
-
-//
-//    // 删除方法
-//    public int del(@Param("id") Integer id);
-//
-//    // 添加用户，返回受影响的行数
-//    public int add(UserInfo userInfo);
-//
-//    // 添加用户，返回受影响的行数和自增的 id
-//    public int addGetId(UserInfo userInfo);
-//
-//    // 添加用户，添加用户时 photo是非必传参数
-//    public int add2(UserInfo userInfo);
-//
-//    // 添加用户，其中 username、password、photo 都是非必传参数，
-//    // 但至少会传递一个参数
-//    public int add3(UserInfo userInfo);
 
 }
