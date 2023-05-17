@@ -47,7 +47,7 @@ class UserMapperTest {
     @Test
     @Transactional
     void delete() {
-        int result = userMapper.delete(6);
+        int result = userMapper.delete(2);
         System.out.println("受影响的行数: " + result);
         Assertions.assertEquals(1, result);
     }
@@ -56,7 +56,7 @@ class UserMapperTest {
     @Transactional
     void add() {
         UserInfo userInfo = new UserInfo();
-        userInfo.setName("王五");
+        userInfo.setName("赵六");
         userInfo.setPassword("123");
         userInfo.setPhoto("default.png");
         int result = userMapper.add(userInfo);
@@ -93,8 +93,8 @@ class UserMapperTest {
     @Test
     void login() {
         String username = "admin";
-        String password = "' or 1='1"; // SQL注入
-//        String password = "admin";
+//        String password = "' or 1='1"; // SQL注入
+        String password = "admin";
         UserInfo userInfo = userMapper.login(username, password);
         log.info("用户信息: " + userInfo);
     }
