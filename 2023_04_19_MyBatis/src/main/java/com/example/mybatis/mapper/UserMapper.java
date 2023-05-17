@@ -27,7 +27,7 @@ public interface UserMapper {
     // 根据全名查询用户对象(非模糊查询)
     public UserInfo getUserByFullName(@Param("username") String username);
 
-    // 获取列表，根据创建时间进行倒序或正序
+    // 获取列表(根据创建时间进行倒序或正序)
     public List<UserInfo> getOrderList(@Param("order") String order);
 
     /**
