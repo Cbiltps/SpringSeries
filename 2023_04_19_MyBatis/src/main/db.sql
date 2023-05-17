@@ -44,8 +44,6 @@ create table videoinfo (
 -- 添加一个用户信息
 insert into `mycnblog`.`userinfo` (`id`, `username`, `password`, `photo`, `createtime`, `updatetime`, `state`) values (1, 'admin', 'admin', '', '2023-04-20 17:10:48', '2023-04-20 17:10:48', 1);
 insert into `mycnblog`.`userinfo` (`id`, `username`, `password`, `photo`, `createtime`, `updatetime`, `state`) values (2, '张三', 'password', '', '2023-04-21 17:10:48', '2023-04-21 17:10:48', 1);
-insert into `mycnblog`.`userinfo` (`id`, `username`, `password`, `photo`, `createtime`, `updatetime`, `state`) values (3, '王五', '123', 'default.png', '2023-04-22 17:10:48', '2023-04-22 17:10:48', 1);
-insert into `mycnblog`.`userinfo` (`id`, `username`, `password`, `photo`, `createtime`, `updatetime`, `state`) values (4, '李四', '123', 'default.png', '2023-04-23 17:10:48', '2023-04-23 17:10:48', 1);
 
 -- 文章添加测试数据
 insert into articleinfo (title, content, uid) values ('Java', 'Java正文', 1);
