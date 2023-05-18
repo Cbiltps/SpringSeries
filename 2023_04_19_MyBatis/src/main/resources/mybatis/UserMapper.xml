@@ -94,6 +94,14 @@
         delete from userinfo where id=#{id}
     </delete>
 
+    <!-- 根据多个用户 id 删除用户 -->
+    <delete id="deleteWithIds">
+        delete from userinfo where id in
+        <foreach collection="ids" open="(" close=")" item="id" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
     <!-- 添加用户, 返回受影响的行数 -->
     <insert id="add">
         insert into userinfo(username, password, photo) values (#{username}, #{password}, #{photo})

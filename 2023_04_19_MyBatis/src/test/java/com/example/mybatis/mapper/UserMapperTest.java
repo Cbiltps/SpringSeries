@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -127,7 +127,7 @@ class UserMapperTest {
 //    @Transactional
     void add3() {
         UserInfo userInfo = new UserInfo();
-        userInfo.setName("小九");
+        userInfo.setName("zhangsan");
         userInfo.setPassword("123");
         userInfo.setPhoto("123.png");
         int result = userMapper.add2(userInfo);
@@ -143,5 +143,15 @@ class UserMapperTest {
         userInfo.setPhoto("xxx.png");
         int result = userMapper.update2(userInfo);
         log.info("update2修改后的结果: " + result);
+    }
+
+    @Test
+    void deleteWithIds() {
+        List<Integer> list = new ArrayList<>();
+        list.add(5);
+        list.add(6);
+        list.add(2);
+        int result = userMapper.deleteWithIds(list);
+        log.info("批量删除的结果: " + result);
     }
 }

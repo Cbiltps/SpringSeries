@@ -49,6 +49,9 @@ public interface UserMapper {
     // 根据用户 id 删除用户
     public int delete(@Param("id") Integer id);
 
+    // 根据多个用户 id 删除用户
+    public int deleteWithIds(List<Integer> ids);
+
     // 添加用户, 返回受影响的行数
     public int add(UserInfo userInfo);
 
