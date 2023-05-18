@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -110,5 +111,26 @@ class UserMapperTest {
     void getUserAndArticleByUid() {
         UserInfo userInfo = userMapper.getUserAndArticleByUid(1);
         log.info("用户详情: " + userInfo);
+    }
+
+    @Test
+    void add2() {
+        UserInfo userInfo = new UserInfo();
+        userInfo.setName("赵六");
+        userInfo.setPassword("123");
+//        userInfo.setPhoto("123.png");
+        int result = userMapper.add2(userInfo);
+        log.info("添加用户的结果: " + result);
+    }
+
+    @Test
+//    @Transactional
+    void add3() {
+        UserInfo userInfo = new UserInfo();
+        userInfo.setName("小九");
+        userInfo.setPassword("123");
+        userInfo.setPhoto("123.png");
+        int result = userMapper.add2(userInfo);
+        log.info("添加用户的结果: " + result);
     }
 }

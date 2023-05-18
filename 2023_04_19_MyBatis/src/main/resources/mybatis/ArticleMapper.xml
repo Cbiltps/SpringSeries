@@ -3,6 +3,7 @@
 
 <!-- namespace 要设置是实现接口的具体包名加类名 -->
 <mapper namespace="com.example.mybatis.mapper.ArticleMapper">
+
     <resultMap id="BaseMap" type="com.example.mybatis.model.ArticleInfo">
         <id column="id" property="id"></id>
         <result column="title" property="title"></result>

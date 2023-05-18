@@ -15,6 +15,7 @@ import java.util.List;
  */
 @Mapper
 public interface UserMapper {
+
     // 查询用户及用户发表的所有文章
     public UserInfo getUserAndArticleByUid(@Param("uid") Integer uid);
 
@@ -47,6 +48,12 @@ public interface UserMapper {
 
     // 添加用户, 返回受影响的行数
     public int add(UserInfo userInfo);
+
+    // 添加用户, 有非必传参数(使用动态参数)
+    public int add2(UserInfo userInfo);
+
+    // 添加用户, 有多个非必传参数(使用动态参数)-最少传递一个参数
+    public int add3(UserInfo userInfo);
 
     // 添加用户, 返回受影响的行数和自增的 id
     public int addGetId(UserInfo userInfo);
