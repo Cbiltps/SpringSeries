@@ -133,4 +133,15 @@ class UserMapperTest {
         int result = userMapper.add2(userInfo);
         log.info("添加用户的结果: " + result);
     }
+
+    @Test
+    void update2() {
+        UserInfo userInfo = new UserInfo();
+        userInfo.setId(7);
+        userInfo.setName("小七之子");
+        userInfo.setPassword("1234");
+        userInfo.setPhoto("xxx.png");
+        int result = userMapper.update2(userInfo);
+        log.info("update2修改后的结果: " + result);
+    }
 }

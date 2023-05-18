@@ -72,6 +72,23 @@
         update userinfo set username=#{username} where id=#{id}
     </update>
 
+    <!-- 根据用户 id 修改用户数据(动态参数) -->
+    <update id="update2">
+        update userinfo
+        <set>
+            <if test="name != null">
+                username=#{name},
+            </if>
+            <if test="password != null">
+                password=#{password},
+            </if>
+            <if test="photo != null">
+                photo=#{photo}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
     <!-- 根据用户 id 删除用户 -->
     <delete id="delete">
         delete from userinfo where id=#{id}

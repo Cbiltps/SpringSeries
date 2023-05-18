@@ -43,6 +43,9 @@ public interface UserMapper {
     // 根据用户 id 修改用户名称
     public int update(@Param("id") Integer id, @Param("username") String username); // 这里返回的是受影响的行数
 
+    // 根据用户 id 修改用户数据(动态参数)
+    public int update2(UserInfo userInfo); // 这里返回的是受影响的行数
+
     // 根据用户 id 删除用户
     public int delete(@Param("id") Integer id);
 
@@ -57,5 +60,4 @@ public interface UserMapper {
 
     // 添加用户, 返回受影响的行数和自增的 id
     public int addGetId(UserInfo userInfo);
-
 }
