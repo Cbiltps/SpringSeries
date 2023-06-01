@@ -27,5 +27,4 @@ public class UserController {
 //        int num = 10 / 0;
         return "hello";
     }
-
 }

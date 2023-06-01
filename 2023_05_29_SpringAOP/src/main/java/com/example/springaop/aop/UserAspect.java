@@ -49,29 +49,50 @@ public class UserAspect {
         System.out.println("执行了 AfterThrowing 方法");
     }
 
-//    /**
-//     * 针对 userPointcut 切点的环绕通知
-//     *
-//     * @param joinPoint
-//     * @return
-//     */
+    /**
+     * 针对 userPointcut 切点的环绕通知(计算方法的执行时间---旧的写法).
+     * @param joinPoint
+     * @return
+     */
 //    @Around("userPointcut()")
 //    public Object doAround(ProceedingJoinPoint joinPoint) {
-//        // spring 中的时间统计对象
-//        StopWatch stopWatch = new StopWatch();
 //        Object result = null;
+//        long start = System.currentTimeMillis();
 //        try {
-//            stopWatch.start(); // 统计方法的执行时间，开始计时了
-//            // 执行目标方法，以及目标方法所对应的相应的通知
+//
+//            // 执行目标方法, 以及目标方法所对应的相应的通知
 //            result = joinPoint.proceed();
-//            stopWatch.stop(); // // 统计方法的执行时间，停止计时
+//
 //        } catch (Throwable throwable) {
 //            throwable.printStackTrace();
 //        }
-//        System.out.println(joinPoint.getSignature().getDeclaringTypeName() + "." +
-//                joinPoint.getSignature().getName() + " 方法执行花费的时间: " +
-//                stopWatch.getTotalTimeMillis() + "ms");
+//        long end = System.currentTimeMillis();
+//        System.out.println(joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName()
+//                + " 方法执行时间: " + (end - start) + "ms");
 //        return result;
 //    }
 
+    /**
+     * 针对 userPointcut 切点的环绕通知(Spring中的时间统计).
+     *
+     * @param joinPoint
+     * @return
+     */
+    @Around("userPointcut()")
+    public Object doAround(ProceedingJoinPoint joinPoint) {
+        // Spring中的时间统计对象
+        StopWatch stopWatch = new StopWatch();
+        Object result = null;
+        try {
+            stopWatch.start(); // 开始计时
+            // 执行目标方法, 以及目标方法所对应的相应的通知等
+            result = joinPoint.proceed();
+            stopWatch.stop(); // 停止计时
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
+        System.out.println(joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName()
+                + " 方法执行花费的时间: " + stopWatch.getTotalTimeMillis() + "ms");
+        return result;
+    }
 }
