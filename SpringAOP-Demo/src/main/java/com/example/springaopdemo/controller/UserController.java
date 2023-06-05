@@ -38,7 +38,7 @@ public class UserController {
 
     @RequestMapping("/index")
     public String index() {
-//        int num = 10 / 0;
+        int num = 10 / 0;
         return "Hello, Index!";
     }
 

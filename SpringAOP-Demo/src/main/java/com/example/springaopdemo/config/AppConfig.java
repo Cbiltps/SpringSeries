@@ -38,9 +38,9 @@ public class AppConfig implements WebMvcConfigurer {
      * 所有的接口添加 api 前缀
      * @param configurer
      */
-    @Override
-    public void configurePathMatch(PathMatchConfigurer configurer) {
-        // 其中第二个参数是一个表达式, 设置为 true 表示启动前缀
-        configurer.addPathPrefix("api", c -> true);
-    }
+//    @Override
+//    public void configurePathMatch(PathMatchConfigurer configurer) {
+//        // 其中第二个参数是一个表达式, 设置为 true 表示启动前缀
+//        configurer.addPathPrefix("api", c -> true);
+//    }
 }
