@@ -1,12 +1,10 @@
 package com.example.springtransaction.service;
 
 import com.example.springtransaction.mapper.LogMapper;
-import com.example.springtransaction.mapper.UserMapper;
-import com.example.springtransaction.model.UserInfo;
+import com.example.springtransaction.model.LogInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 
 import javax.annotation.Resource;
 
@@ -14,21 +12,26 @@ import javax.annotation.Resource;
  * Created with IntelliJ IDEA.
  * Description:
  * User: cbiltps
- * Date: 2023-06-07
- * Time: 11:03
+ * Date: 2023-07-01
+ * Time: 18:03
  */
 @Service
-public class UserService {
+public class LogService {
+
     @Resource
-    private UserMapper userMapper;
+    private LogMapper logMapper;
 
     @Transactional(propagation = Propagation.NESTED)
 //    @Transactional(propagation = Propagation.REQUIRES_NEW)
 //    @Transactional(propagation = Propagation.REQUIRED)
-    public int add(UserInfo userInfo) {
-        // 添加用户
-        int result = userMapper.add(userInfo);
-        System.out.println("添加用户: " + result);
+    public int add(LogInfo logInfo) {
+        int result = logMapper.add(logInfo);
+        System.out.println("添加日志结果: " + result);
+//        try {
+        int number = 10 / 0;
+//        } catch (Exception e) {
+//            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly(); // 设置手动回滚
+//        }
         return result;
     }
 }

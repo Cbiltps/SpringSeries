@@ -1,10 +1,13 @@
 package com.example.springtransaction.controller;
 
+import com.example.springtransaction.model.LogInfo;
 import com.example.springtransaction.model.UserInfo;
+import com.example.springtransaction.service.LogService;
 import com.example.springtransaction.service.UserService;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.util.StringUtils;
@@ -25,6 +28,9 @@ public class UserController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private LogService logService;
 
     @Resource
     private DataSourceTransactionManager transactionManager; // 事务管理器
@@ -116,5 +122,121 @@ public class UserController {
         }
 
         return result;
+    }
+
+
+    /**
+     * 默认的事务隔离级别就是 REQUIRED ,所以加不加 propagation = Propagation.REQUIRED 都是一样的!
+     *
+     * 注意: 正常写业务的时候, 添加用户和日志信息写在一起是可以的,
+     * 但是, 这里要验证的是 事务A中调用了B和C事务 ,
+     * 所以, 这里要学三个方法,
+     * 故此, 要把 添加用户和日志信息 分开写!
+     *
+     * 设置添加用户正常, 添加日志异常, 最后运行代码, 浏览器尝试添加操作:
+     * 发现, 添加的用户也被回滚了!!!
+     * 这就是 Propagation.REQUIRED 最典型事务隔离级别的特性!!!
+     * @return
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    @RequestMapping("/add4")
+    public int add4(UserInfo userInfo) {
+        // 非空效验(验证用户名和密码不为空)
+        if (userInfo == null || !StringUtils.hasLength(userInfo.getUsername()) || !StringUtils.hasLength(userInfo.getPassword())) {
+            return 0;
+        }
+
+        // 添加用户
+        int userResult = userService.add(userInfo);
+
+        // 添加日志
+        LogInfo logInfo = new LogInfo();
+        logInfo.setName("日志名");
+        logInfo.setDesc("日志说明: " + userResult);
+        logService.add(logInfo);
+
+        // 返回结果
+        return userResult;
+    }
+
+    /**
+     * add4方法 是 支持当前事务 的举例, 下面的 add5方法 是 不支持当前事务 的举例(会创建一个新的事务),
+     * 因为会创建一个新的事务,
+     * 所以, 本事务的事务隔离级别随意!
+     *
+     * 设置添加用户正常, 添加日志异常, 最后运行代码, 浏览器尝试添加操作:
+     * 发现, 用户添加成功,
+     * 但是, 日志没有添加成功!
+     * 这就是 propagation = Propagation.REQUIRES_NEW 事务隔离级别的特性!!!
+     *
+     * @param userInfo
+     * @return
+     */
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
+    @RequestMapping("/add5")
+    public int add5(UserInfo userInfo) {
+        // 非空效验(验证用户名和密码不为空)
+        if (userInfo == null || !StringUtils.hasLength(userInfo.getUsername()) || !StringUtils.hasLength(userInfo.getPassword())) {
+            return 0;
+        }
+
+        // 添加用户
+        int userResult = userService.add(userInfo);
+
+        // 添加日志
+        LogInfo logInfo = new LogInfo();
+        logInfo.setName("日志名");
+        logInfo.setDesc("日志说明: " + userResult);
+        logService.add(logInfo);
+
+        // 返回结果
+        return userResult;
+    }
+
+    /**
+     * 而当事务的隔离级别为 Propagation.NOT_SUPPORTED 的时候.
+     *
+     * 设置添加用户正常, 添加日志异常, 最后运行代码, 浏览器尝试添加操作:
+     * 添加用户和添加日志都会出现在数据库中.
+     *
+     * 代码不在多余展示!
+     */
+
+    /**
+     * 设置事务隔离级别: 嵌套事务!!!
+     *
+     * 设置添加用户正常, 添加日志异常, 最后运行代码, 浏览器尝试添加操作:
+     *
+     * 1. 当没有使用 try...catch...语句 手动回滚时,
+     * 发生回滚的事务是全局的, 也就是说 添加用户方法 也被回滚了,
+     * 最终执行结果是添加用户和添加日志都回滚了!!!
+     *
+     * 2. 当使用 try...catch...语句 手动回滚时,
+     * 最终执行结果是添加用户没有回滚,
+     * 但是, 添加日志回滚了!!!
+     *
+     * 这就是 propagation = Propagation.NESTED 嵌套事务隔离级别的特性!!!
+     * @param userInfo
+     * @return
+     */
+    @Transactional(propagation = Propagation.NESTED)
+    @RequestMapping("/add6")
+    public int add6(UserInfo userInfo) {
+        // 非空效验(验证用户名和密码不为空)
+        if (userInfo == null || !StringUtils.hasLength(userInfo.getUsername()) || !StringUtils.hasLength(userInfo.getPassword())) {
+            return 0;
+        }
+
+        // 添加用户
+        int userResult = userService.add(userInfo);
+
+        // 添加日志
+        LogInfo logInfo = new LogInfo();
+        logInfo.setName("XXX日志");
+        logInfo.setDesc("XXX日志说明: " + userResult);
+        logService.add(logInfo);
+
+        // 返回结果
+        return userResult;
     }
 }
