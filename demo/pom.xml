@@ -54,6 +54,13 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+<!--        基于 DFA 算法实现的高性能敏感词工具-->
+        <dependency>
+            <groupId>com.github.houbb</groupId>
+            <artifactId>sensitive-word</artifactId>
+            <version>0.25.0</version>
+        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>
