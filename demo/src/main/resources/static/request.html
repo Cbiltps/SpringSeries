@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta
+            name="viewport"
+            content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, message-scalable=no"
+    />
+
+    <title>请求测试页面</title>
+
+    <!-- jQuery导入 -->
+    <script src="js/jquery-3.1.1.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#submit").click(function () {
+                let sendmessage = $("#message").val();
+                if (sendmessage < 0) {
+                    alert("无法取到负数的斐波那契数！");
+                    return;
+                }
+
+                $.ajax({
+                    url: "/message",
+                    type: "post",
+                    data: {
+                        sendmessage: sendmessage,
+                    },
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response);
+                    },
+                });
+            });
+        });
+    </script>
+</head>
+
+<body id="body">
+<div
+        class="container"
+        style="width: 400px; margin-top: 110px; background-color: rgba(255, 255, 255, 0.8); border-radius: 4px"
+>
+    <h3 style="text-align: center">请求测试</h3>
+    <div class="form-group" style="text-align: center">
+        <label for="message">第X个斐波那契数是: </label>
+        <input type="text" name="sendmessage" id="message" placeholder="请输入..."/>
+    </div>
+    <hr>
+    <div class="form-group" style="text-align: center">
+        <input
+                style="width: 200px; height: 40px"
+                id="submit"
+                type="button"
+                value="发送"
+        />
+    </div>
+</div>
+</body>
+</html>
